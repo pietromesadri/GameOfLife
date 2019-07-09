@@ -49,7 +49,7 @@ def main():
     speed = 10
     fps = 0
     frame = 0
-    speed = 3
+    cell_speed = 3
     move_l = False
     move_r = False
     move_u = False
@@ -112,13 +112,11 @@ def main():
             if event.type == pygame.KEYUP and event.key == K_DOWN:
                 zoom_down = False
             if event.type == pygame.KEYDOWN and event.key == K_RIGHT:
-                speed_up = True
-            if event.type == pygame.KEYUP and event.key == K_RIGHT:
-                speed_up = False
+                if cell_speed > 1:
+                    cell_speed -= 1
             if event.type == pygame.KEYDOWN and event.key == K_LEFT:
-                speed_down = True
-            if event.type == pygame.KEYUP and event.key == K_LEFT:
-                speed_down = False
+                if cell_speed < 15:
+                    cell_speed += 1
             if event.type == pygame.KEYDOWN and event.key == K_SPACE:
                 play = not play
             if event.type == pygame.KEYDOWN and event.key == K_r:
@@ -147,14 +145,9 @@ def main():
         if zoom_down:
             width -= 1
             height -= 1
-        if speed_up:
-            if speed > 1:
-                speed -= 1
-        if speed_down:
-            if speed < 15:
-                speed += 1
 
-        if play and not reset and frame % speed == 0:
+
+        if play and not reset and frame % cell_speed == 0:
             print(int(fps))
             if len(cells) > 0:
                 for cell in cells:
